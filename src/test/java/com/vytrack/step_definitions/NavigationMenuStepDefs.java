@@ -7,6 +7,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 
+import java.net.MalformedURLException;
+
 public class NavigationMenuStepDefs {
     @When("the user navigates to Fleet, Vehicles")
     public void the_user_navigates_to_Fleet_Vehicles() {
@@ -43,13 +45,13 @@ public class NavigationMenuStepDefs {
 
 
     @When("the user navigates to {string} {string}")
-    public void the_user_navigates_to(String tab, String module) {
+    public void the_user_navigates_to(String tab, String module) throws MalformedURLException {
         new DashboardPage().navigateToModule(tab,module);
     }
 
 
     @Then("default page number should be {int}")
-    public void default_page_number_should_be(Integer expectedPageNum) {
+    public void default_page_number_should_be(Integer expectedPageNum) throws MalformedURLException {
         BrowserUtils.waitFor(3);
         ContactsPage contactsPage = new ContactsPage();
         Integer actualNumber =Integer.parseInt(contactsPage.pageNumber.getAttribute("value"));

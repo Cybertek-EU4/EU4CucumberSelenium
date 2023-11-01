@@ -12,13 +12,14 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 
 public class ContactsStepDefs {
 
     @Given("the user logged in as {string}")
-    public void the_user_logged_in_as(String userType) {
+    public void the_user_logged_in_as(String userType) throws MalformedURLException {
         //go to login page
         Driver.get().get(ConfigurationReader.get("url"));
         //based on input enter that user information
@@ -40,7 +41,7 @@ public class ContactsStepDefs {
     }
 
     @Then("the user should see following options")
-    public void the_user_should_see_following_options(List<String> menuOptions) {
+    public void the_user_should_see_following_options(List<String> menuOptions) throws MalformedURLException {
         BrowserUtils.waitFor(2);
         //get the list of webelement and convert them to list of string and assert
         List<String> actualOptions = BrowserUtils.getElementsText(new DashboardPage().menuOptions);
@@ -51,7 +52,7 @@ public class ContactsStepDefs {
     }
 
     @When("the user logs in using following credentials")
-    public void the_user_logs_in_using_following_credentials(Map<String,String> userInfo) {
+    public void the_user_logs_in_using_following_credentials(Map<String,String> userInfo) throws MalformedURLException {
         System.out.println(userInfo);
         //use map information to login and also verify firstname and lastname
         //login with map info

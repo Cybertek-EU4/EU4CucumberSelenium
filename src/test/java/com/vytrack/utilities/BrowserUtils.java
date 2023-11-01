@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class BrowserUtils {
      * Switches to new window by the exact title. Returns to original window if target title not found
      * @param targetTitle
      */
-    public static void switchToWindow(String targetTitle) {
+    public static void switchToWindow(String targetTitle) throws MalformedURLException {
         String origin = Driver.get().getWindowHandle();
         for (String handle : Driver.get().getWindowHandles()) {
             Driver.get().switchTo().window(handle);
@@ -33,7 +34,7 @@ public class BrowserUtils {
      *
      * @param element on which to hover
      */
-    public static void hover(WebElement element) {
+    public static void hover(WebElement element) throws MalformedURLException {
         Actions actions = new Actions(Driver.get());
         actions.moveToElement(element).perform();
     }
@@ -58,7 +59,7 @@ public class BrowserUtils {
      * @param locator
      * @return list of strings
      */
-    public static List<String> getElementsText(By locator) {
+    public static List<String> getElementsText(By locator) throws MalformedURLException {
 
         List<WebElement> elems = Driver.get().findElements(locator);
         List<String> elemTexts = new ArrayList<>();
@@ -89,7 +90,7 @@ public class BrowserUtils {
      * @param timeToWaitInSec
      * @return
      */
-    public static WebElement waitForVisibility(WebElement element, int timeToWaitInSec) {
+    public static WebElement waitForVisibility(WebElement element, int timeToWaitInSec) throws MalformedURLException {
         WebDriverWait wait = new WebDriverWait(Driver.get(), timeToWaitInSec);
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
@@ -101,7 +102,7 @@ public class BrowserUtils {
      * @param timeout
      * @return
      */
-    public static WebElement waitForVisibility(By locator, int timeout) {
+    public static WebElement waitForVisibility(By locator, int timeout) throws MalformedURLException {
         WebDriverWait wait = new WebDriverWait(Driver.get(), timeout);
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
@@ -113,7 +114,7 @@ public class BrowserUtils {
      * @param timeout
      * @return
      */
-    public static WebElement waitForClickablility(WebElement element, int timeout) {
+    public static WebElement waitForClickablility(WebElement element, int timeout) throws MalformedURLException {
         WebDriverWait wait = new WebDriverWait(Driver.get(), timeout);
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
@@ -125,7 +126,7 @@ public class BrowserUtils {
      * @param timeout
      * @return
      */
-    public static WebElement waitForClickablility(By locator, int timeout) {
+    public static WebElement waitForClickablility(By locator, int timeout) throws MalformedURLException {
         WebDriverWait wait = new WebDriverWait(Driver.get(), timeout);
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
@@ -158,7 +159,7 @@ public class BrowserUtils {
     public static void verifyElementDisplayed(By by) {
         try {
             Assert.assertTrue("Element not visible: " + by, Driver.get().findElement(by).isDisplayed());
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException | MalformedURLException e) {
             e.printStackTrace();
             Assert.fail("Element not found: " + by);
 
@@ -174,7 +175,7 @@ public class BrowserUtils {
     public static void verifyElementNotDisplayed(By by) {
         try {
             Assert.assertFalse("Element should not be visible: " + by, Driver.get().findElement(by).isDisplayed());
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException | MalformedURLException e) {
             e.printStackTrace();
 
         }
@@ -234,7 +235,7 @@ public class BrowserUtils {
      *
      * @param element
      */
-    public static void clickWithJS(WebElement element) {
+    public static void clickWithJS(WebElement element) throws MalformedURLException {
         ((JavascriptExecutor) Driver.get()).executeScript("arguments[0].scrollIntoView(true);", element);
         ((JavascriptExecutor) Driver.get()).executeScript("arguments[0].click();", element);
     }
@@ -245,7 +246,7 @@ public class BrowserUtils {
      *
      * @param element
      */
-    public static void scrollToElement(WebElement element) {
+    public static void scrollToElement(WebElement element) throws MalformedURLException {
         ((JavascriptExecutor) Driver.get()).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
@@ -254,7 +255,7 @@ public class BrowserUtils {
      *
      * @param element
      */
-    public static void doubleClick(WebElement element) {
+    public static void doubleClick(WebElement element) throws MalformedURLException {
         new Actions(Driver.get()).doubleClick(element).build().perform();
     }
 
@@ -265,7 +266,7 @@ public class BrowserUtils {
      * @param attributeName
      * @param attributeValue
      */
-    public static void setAttribute(WebElement element, String attributeName, String attributeValue) {
+    public static void setAttribute(WebElement element, String attributeName, String attributeValue) throws MalformedURLException {
         ((JavascriptExecutor) Driver.get()).executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);", element, attributeName, attributeValue);
     }
 
@@ -273,7 +274,7 @@ public class BrowserUtils {
      * Highlighs an element by changing its background and border color
      * @param element
      */
-    public static void highlight(WebElement element) {
+    public static void highlight(WebElement element) throws MalformedURLException {
         ((JavascriptExecutor) Driver.get()).executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
         waitFor(1);
         ((JavascriptExecutor) Driver.get()).executeScript("arguments[0].removeAttribute('style', 'background: yellow; border: 2px solid red;');", element);
@@ -319,7 +320,7 @@ public class BrowserUtils {
      *
      * @param element
      */
-    public static void executeJScommand(WebElement element, String command) {
+    public static void executeJScommand(WebElement element, String command) throws MalformedURLException {
         JavascriptExecutor jse = (JavascriptExecutor) Driver.get();
         jse.executeScript(command, element);
 
@@ -330,7 +331,7 @@ public class BrowserUtils {
      *
      * @param command
      */
-    public static void executeJScommand(String command) {
+    public static void executeJScommand(String command) throws MalformedURLException {
         JavascriptExecutor jse = (JavascriptExecutor) Driver.get();
         jse.executeScript(command);
 
@@ -353,7 +354,7 @@ public class BrowserUtils {
                 clickWithJS(Driver.get().findElement(by));
                 //if click is successful - then break
                 break;
-            } catch (WebDriverException e) {
+            } catch (WebDriverException | MalformedURLException e) {
                 //if click failed
                 //print exception
                 //print attempt
@@ -371,7 +372,7 @@ public class BrowserUtils {
      * @param by
      * @param time
      */
-    public static void waitForPresenceOfElement(By by, long time) {
+    public static void waitForPresenceOfElement(By by, long time) throws MalformedURLException {
         new WebDriverWait(Driver.get(), time).until(ExpectedConditions.presenceOfElementLocated(by));
     }
 

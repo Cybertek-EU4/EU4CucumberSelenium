@@ -66,7 +66,7 @@ public abstract class  BasePage {
 
     }
 
-    public String getUserName(){
+    public String getUserName() throws MalformedURLException {
         waitUntilLoaderScreenDisappear();
         BrowserUtils.waitForVisibility(userName, 5);
         return userName.getText();
@@ -74,12 +74,12 @@ public abstract class  BasePage {
 
 
 
-    public void logOut(){
+    public void logOut() throws MalformedURLException {
         BrowserUtils.waitFor(2);
         BrowserUtils.clickWithJS(userName);
         BrowserUtils.clickWithJS(logOutLink);
     }
-    public void goToMyUser(){
+    public void goToMyUser() throws MalformedURLException {
         waitUntilLoaderScreenDisappear();
         BrowserUtils.waitForClickablility(userName, 5).click();
         BrowserUtils.waitForClickablility(myUser, 5).click();
